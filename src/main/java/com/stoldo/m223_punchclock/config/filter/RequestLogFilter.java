@@ -31,7 +31,7 @@ public class RequestLogFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		
-		// exclude h2-console requests
+		// exclude h2-console requests from logging
 		if (!StringUtils.startsWith(httpRequest.getRequestURI(), "/h2-console")) {
 			String logMsg = MessageFormat.format("Request on {0} was answered with Status {1}", httpRequest.getRequestURL(), httpResponse.getStatus());
 			log.log(Level.INFO, logMsg);	

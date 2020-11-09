@@ -6,6 +6,7 @@ public class CommonUtils {
 	public static final String EMAIL_REGEXP = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]+";
 	public static final String EMAIL_REGEXP_MESSAGE = "Invalid email.";
 	
+	
 	public static <E extends Throwable> void falseThenThrow(boolean b, E e) throws E {
 		if (!b) {
 			throw e;
@@ -16,6 +17,7 @@ public class CommonUtils {
 		if (t != null) {
 			return t;
 		}
+		
 		throw e;
 	}
 }

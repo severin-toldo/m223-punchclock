@@ -6,9 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
-// category update and delete!
-// Remove @Autowire everywhere!
-
 @SpringBootApplication
 public class ServerMainController {
 

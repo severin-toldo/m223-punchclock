@@ -21,8 +21,8 @@ public class CategoryEntityController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<CategoryEntity> getAllEntries() {
-        return categoryService.findAll();
+    public List<CategoryEntity> getCategories() {
+        return categoryService.getCategories();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -31,8 +31,9 @@ public class CategoryEntityController {
         return categoryService.save(category);
     }
     
-    @RequestMapping(method = RequestMethod.PUT)
-    public CategoryEntity updateCategory(@Valid @RequestBody CategoryEntity category) {
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    public CategoryEntity updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryEntity category) {
+    	// TODO get by id
     	return categoryService.save(category);
     }
     

@@ -22,8 +22,8 @@ public class EntryEntityController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<EntryEntity> getAllEntries() {
-        return entryService.findAll();
+    public List<EntryEntity> getEntries() {
+        return entryService.getEntries();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -32,8 +32,9 @@ public class EntryEntityController {
         return entryService.save(entry);
     }
     
-    @RequestMapping(method = RequestMethod.PUT)
-    public EntryEntity updateEntry(@Valid @RequestBody EntryEntity entry) {
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    public EntryEntity updateEntry(@PathVariable Long id, @Valid @RequestBody EntryEntity entry) {
+    	// TODO get by id
     	return entryService.save(entry);
     }
     

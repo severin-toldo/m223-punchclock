@@ -17,7 +17,7 @@ public class EntryEntityService {
         this.entryRepository = entryRepository;
     }
 
-    public List<EntryEntity> findAll() {
+    public List<EntryEntity> getEntries() {
         return entryRepository.findAll();
     }
     
