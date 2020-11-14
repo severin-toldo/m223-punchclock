@@ -7,8 +7,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.stoldo.m223_punchclock.model.api.UserChangePasswordRequest;
 import com.stoldo.m223_punchclock.model.api.UserInvitationRequest;
@@ -40,13 +40,13 @@ public class UserEntityController {
 	
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public UserEntity getById(@PathVariable Long id) {
-    	CommonUtils.falseThenThrow(css.isCurrentUserAdmin() || css.isCurrentUserSameAsUser(id), new RuntimeException("TODO ERROR CODE"));
+    	CommonUtils.falseThenThrow(css.isCurrentUserAdmin() || css.isCurrentUserSameAsUser(id), new ResponseStatusException(HttpStatus.FORBIDDEN));
 		return userEntityService.getById(id);
 	}
     
     @RequestMapping(value = "{id}", method = RequestMethod.PATCH)
 	public UserEntity edit(@PathVariable Long id, @RequestBody @Valid UserEntity ue) {
-    	CommonUtils.falseThenThrow(css.isCurrentUserAdmin() || css.isCurrentUserSameAsUser(id), new RuntimeException("TODO ERROR CODE"));
+    	CommonUtils.falseThenThrow(css.isCurrentUserAdmin() || css.isCurrentUserSameAsUser(id), new ResponseStatusException(HttpStatus.FORBIDDEN));
 		return userEntityService.edit(id, ue);
 	}
     
@@ -54,26 +54,26 @@ public class UserEntityController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable Long id) {
-    	CommonUtils.falseThenThrow(css.isCurrentUserAdmin() || css.isCurrentUserSameAsUser(id), new RuntimeException("TODO ERROR CODE"));
+    	CommonUtils.falseThenThrow(css.isCurrentUserAdmin() || css.isCurrentUserSameAsUser(id), new ResponseStatusException(HttpStatus.FORBIDDEN));
     	userEntityService.delete(id);
 	}
     
     @RequestMapping(value = "{id}/password", method = RequestMethod.PUT)
    	public UserEntity changePassword(@PathVariable Long id, @RequestBody @Valid UserChangePasswordRequest ucpr) {
-       	CommonUtils.falseThenThrow(css.isCurrentUserSameAsUser(id), new RuntimeException("TODO ERROR CODE"));
+       	CommonUtils.falseThenThrow(css.isCurrentUserSameAsUser(id), new ResponseStatusException(HttpStatus.FORBIDDEN));
    		return userEntityService.changePassword(id, ucpr);
    	}
     
     @RequestMapping(value = "email/{email}", method = RequestMethod.GET)
 	public UserEntity getByEmail(@PathVariable String email) {
-    	CommonUtils.falseThenThrow(css.isCurrentUserAdmin() || css.isCurrentUserSameAsUser(email), new RuntimeException("TODO ERROR CODE"));
+    	CommonUtils.falseThenThrow(css.isCurrentUserAdmin() || css.isCurrentUserSameAsUser(email), new ResponseStatusException(HttpStatus.FORBIDDEN));
 		return userEntityService.getByEmail(email);
 	}
     
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
     @RequestMapping(value = "invite", method = RequestMethod.POST)
-    public UserEntity invite(@RequestBody @Validated UserInvitationRequest uir) {
+    public UserEntity invite(@RequestBody @Valid UserInvitationRequest uir) {
     	return userEntityService.invite(uir);
     }
 }

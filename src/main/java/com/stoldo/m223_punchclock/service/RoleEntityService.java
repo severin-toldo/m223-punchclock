@@ -7,7 +7,7 @@ import com.stoldo.m223_punchclock.model.entity.RoleEntity;
 import com.stoldo.m223_punchclock.model.enums.Role;
 import com.stoldo.m223_punchclock.repository.RoleEntityRepository;
 
-import java.util.List;
+import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
 
@@ -25,18 +25,15 @@ public class RoleEntityService {
 	
 	@PostConstruct
 	private void init() {
-		for (Role role : Role.values()) {
+		Arrays.asList(Role.values()).forEach(role -> {
 			RoleEntity re = new RoleEntity();
 			re.setRole(role);
-			roleEntityRepository.saveAndFlush(re);
-		}
+			roleEntityRepository.saveAndFlush(re);	
+		});
 	}
 
     public RoleEntity findByRole(Role role) {
         return roleEntityRepository.findByRole(role);
     }
 
-    public List<RoleEntity> getRoles() {
-        return roleEntityRepository.findAll();
-    }
 }

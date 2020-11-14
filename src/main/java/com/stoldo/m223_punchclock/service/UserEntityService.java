@@ -6,6 +6,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.stoldo.m223_punchclock.model.api.UserChangePasswordRequest;
 import com.stoldo.m223_punchclock.model.api.UserInvitationRequest;
 import com.stoldo.m223_punchclock.model.entity.UserEntity;
+import com.stoldo.m223_punchclock.model.enums.ErrorCode;
 import com.stoldo.m223_punchclock.model.enums.Role;
 import com.stoldo.m223_punchclock.model.enums.UserStatus;
+import com.stoldo.m223_punchclock.model.exception.ErrorCodeException;
 import com.stoldo.m223_punchclock.repository.UserEntityRepository;
 
 
@@ -67,7 +70,7 @@ public class UserEntityService {
    			return saveUser(existingUser);
    		}
    		
-   		throw new RuntimeException("TODO error code");
+   		throw new ErrorCodeException(ErrorCode.E1002, HttpStatus.BAD_REQUEST);
    	}
     
     public UserEntity invite(@RequestBody @Valid UserInvitationRequest uir) {

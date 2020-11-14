@@ -5,10 +5,13 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stoldo.m223_punchclock.model.api.UserLoginRequest;
 import com.stoldo.m223_punchclock.model.entity.UserEntity;
+import com.stoldo.m223_punchclock.model.enums.ErrorCode;
+import com.stoldo.m223_punchclock.model.exception.ErrorCodeException;
 import com.stoldo.m223_punchclock.service.UserEntityService;
 import com.stoldo.m223_punchclock.shared.Constants;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -48,7 +51,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         	UserLoginRequest ulr = objectMapper.readValue(req.getInputStream(), UserLoginRequest.class);
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(ulr.getEmail(), ulr.getPassword(), Collections.emptyList()));
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+        	throw new ErrorCodeException(ErrorCode.E1001, HttpStatus.BAD_REQUEST, ex);
         }
     }
     
