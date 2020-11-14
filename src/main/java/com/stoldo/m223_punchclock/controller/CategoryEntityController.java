@@ -2,6 +2,7 @@ package com.stoldo.m223_punchclock.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.stoldo.m223_punchclock.model.entity.CategoryEntity;
@@ -11,41 +12,41 @@ import javax.validation.Valid;
 import java.util.List;
 
 
-//TODO dependecy stuff -> wenn noch zeit eintrag mit kategire und kategrie löschen dann fehler etc. does this make sense tho?
-//-> think about it
-
-
 @RestController
 @RequestMapping("/categories")
 public class CategoryEntityController {
 	
-    private CategoryEntityService categoryService;
+    private CategoryEntityService categoryEntityService;
     
     
     @Autowired
-    public CategoryEntityController(CategoryEntityService categoryService) {
-        this.categoryService = categoryService;
+    public CategoryEntityController(CategoryEntityService categoryEntityService) {
+        this.categoryEntityService = categoryEntityService;
     }
-
+    
     @RequestMapping(method = RequestMethod.GET)
-    public List<CategoryEntity> getCategories() {
-        return categoryService.getCategories();
+    public List<CategoryEntity> getAll() {
+        return categoryEntityService.getAll();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
-    public CategoryEntity createCategory(@Valid @RequestBody CategoryEntity category) {
-        return categoryService.save(category);
+    public CategoryEntity create(@RequestBody @Valid CategoryEntity ce) {
+        return categoryEntityService.create(ce);
     }
     
-    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public CategoryEntity updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryEntity category) {
-    	// TODO get by id
-    	return categoryService.save(category);
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(value = "{id}", method = RequestMethod.PATCH)
+    public CategoryEntity edit(@PathVariable Long id, @RequestBody @Valid CategoryEntity ce) {
+    	return categoryEntityService.edit(id, ce);
     }
     
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public void updateCategory(@PathVariable Long id) {
-    	categoryService.deleteCategory(id);
+    public void delete(@PathVariable Long id) {
+    	categoryEntityService.delete(id);
     }
+    
 }

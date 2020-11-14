@@ -2,6 +2,8 @@
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.stoldo.m223_punchclock.model.entity.CategoryEntity;
 import com.stoldo.m223_punchclock.model.entity.TimeEntryEntity;
 import com.stoldo.m223_punchclock.model.entity.UserEntity;
 import com.stoldo.m223_punchclock.repository.TimeEntryEntityRepository;
@@ -39,6 +41,7 @@ public class TimeEntryEntityService {
     public TimeEntryEntity create(TimeEntryEntity tee) {
     	UserEntity loggedInUser = css.getLoggedInUserEntity();
     	tee.setUser(loggedInUser);
+    	tee.setId(null);
         return save(tee);
     }
     
@@ -75,6 +78,10 @@ public class TimeEntryEntityService {
     			timeEntryEntityRepository.delete(existingEntry);	
     		}
     	}
+    }
+    
+    public Long countByCategory(CategoryEntity ce) {
+    	return timeEntryEntityRepository.countByCategory(ce);
     }
     
     private TimeEntryEntity save(TimeEntryEntity tee) {
