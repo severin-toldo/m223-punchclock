@@ -1,4 +1,4 @@
-package com.stoldo.m223_punchclock.rest;
+package com.stoldo.m223_punchclock.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

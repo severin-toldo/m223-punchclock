@@ -3,14 +3,14 @@ package com.stoldo.m223_punchclock.model.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import com.stoldo.m223_punchclock.model.SecurityRoleName;
+import com.stoldo.m223_punchclock.model.enums.Role;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(name = "security_role")
+@Entity(name = "role")
 public class RoleEntity {
 
     @Id
@@ -20,6 +20,6 @@ public class RoleEntity {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "name")
-    private SecurityRoleName name;
+    private Role role;
     
 }

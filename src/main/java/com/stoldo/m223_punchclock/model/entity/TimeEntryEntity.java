@@ -12,9 +12,9 @@ import java.util.Date;
 
 @Getter
 @Setter
-@Entity(name = "entry")
+@Entity(name = "time_entry")
 @ValidCheckInCheckOut
-public class EntryEntity {
+public class TimeEntryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,5 +31,10 @@ public class EntryEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="category_id_fk")
     private CategoryEntity category;
+    
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id_fk")
+    private UserEntity user;
    
 }

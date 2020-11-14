@@ -42,6 +42,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }
     }
 
+    
+    // TODO only admin should be able to register uswers...
+    
     // TODO make itrfc conform and add emailmetc
     @Override
     public void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication auth) throws IOException, ServletException {

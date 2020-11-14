@@ -11,10 +11,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import com.stoldo.m223_punchclock.model.SecurityRoleName;
 import com.stoldo.m223_punchclock.model.api.UserRegistrationRequest;
 import com.stoldo.m223_punchclock.model.entity.RoleEntity;
 import com.stoldo.m223_punchclock.model.entity.UserEntity;
+import com.stoldo.m223_punchclock.model.enums.Role;
 import com.stoldo.m223_punchclock.repository.UserEntityRepository;
 
 @Service
@@ -41,6 +41,7 @@ public class UserEntityService {
         return userEntityRepository.saveAndFlush(ue);
     }
     
+    // TODO return jwt
     public UserEntity register(@Validated UserRegistrationRequest urr) {
     	UserEntity ue = new UserEntity();
     	ue.setEmail(urr.getEmail());
@@ -49,7 +50,7 @@ public class UserEntityService {
     	if (urr.getRoles() != null) {
     		List<RoleEntity> fileredRoles = urr.getRoles().stream()
     				.filter(r -> r != null)
-    				.filter(r -> r.getName() != SecurityRoleName.ADMIN) // security reasons
+    				.filter(r -> r.getRole() != Role.ADMIN) // security reasons
     				.collect(Collectors.toList());
     		
     		ue.setSecurityRoles(fileredRoles);

@@ -1,39 +1,39 @@
-package com.stoldo.m223_punchclock.rest;
+package com.stoldo.m223_punchclock.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import com.stoldo.m223_punchclock.model.entity.EntryEntity;
-import com.stoldo.m223_punchclock.service.EntryEntityService;
+import com.stoldo.m223_punchclock.model.entity.TimeEntryEntity;
+import com.stoldo.m223_punchclock.service.TimeEntryEntityService;
 
 import javax.validation.Valid;
 import java.util.List;
 
 
 @RestController
-@RequestMapping("/entries")
-public class EntryEntityController {
+@RequestMapping("/time-entries")
+public class TimeEntryEntityController {
 	
-    private EntryEntityService entryService;
+    private TimeEntryEntityService entryService;
     
 
-    public EntryEntityController(EntryEntityService entryService) {
+    public TimeEntryEntityController(TimeEntryEntityService entryService) {
         this.entryService = entryService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<EntryEntity> getEntries() {
+    public List<TimeEntryEntity> getEntries() {
         return entryService.getEntries();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
-    public EntryEntity createEntry(@Valid @RequestBody EntryEntity entry) {
+    public TimeEntryEntity createEntry(@Valid @RequestBody TimeEntryEntity entry) {
         return entryService.save(entry);
     }
     
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public EntryEntity updateEntry(@PathVariable Long id, @Valid @RequestBody EntryEntity entry) {
+    public TimeEntryEntity updateEntry(@PathVariable Long id, @Valid @RequestBody TimeEntryEntity entry) {
     	// TODO get by id
     	return entryService.save(entry);
     }

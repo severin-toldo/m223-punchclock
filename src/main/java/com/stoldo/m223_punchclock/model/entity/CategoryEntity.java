@@ -19,10 +19,10 @@ public class CategoryEntity {
     private Long id;
 
     @NotNull
-    @Column(unique = true)
+    @Column(name = "name", unique = true)
     private String name;
     
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "id")
-    private List<EntryEntity> entries = new ArrayList<>();
+    private List<TimeEntryEntity> entries = new ArrayList<>();
     
 }
