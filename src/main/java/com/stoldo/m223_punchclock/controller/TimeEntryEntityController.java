@@ -11,40 +11,38 @@ import javax.validation.Valid;
 import java.util.List;
 
 
-//TODO dependecy stuff -> wenn noch zeit eintrag mit kategire und kategrie löschen dann fehler etc. does this make sense tho?
-//-> think about it
-
 @RestController
 @RequestMapping("/time-entries")
 public class TimeEntryEntityController {
 	
-    private TimeEntryEntityService entryService;
+    private TimeEntryEntityService timeEntryEntityService;
     
     
     @Autowired
-    public TimeEntryEntityController(TimeEntryEntityService entryService) {
-        this.entryService = entryService;
+    public TimeEntryEntityController(TimeEntryEntityService timeEntryEntityService) {
+        this.timeEntryEntityService = timeEntryEntityService;
     }
-
+    
     @RequestMapping(method = RequestMethod.GET)
-    public List<TimeEntryEntity> getEntries() {
-        return entryService.getEntries();
+    public List<TimeEntryEntity> getAll() {
+        return timeEntryEntityService.getAll();
     }
-
+    
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
-    public TimeEntryEntity createEntry(@Valid @RequestBody TimeEntryEntity entry) {
-        return entryService.save(entry);
+    public TimeEntryEntity create(@Valid @RequestBody TimeEntryEntity tee) {
+        return timeEntryEntityService.create(tee);
     }
     
-    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public TimeEntryEntity updateEntry(@PathVariable Long id, @Valid @RequestBody TimeEntryEntity entry) {
-    	// TODO get by id
-    	return entryService.save(entry);
+    @RequestMapping(value = "{id}", method = RequestMethod.PATCH)
+    public TimeEntryEntity edit(@PathVariable Long id, @Valid @RequestBody TimeEntryEntity tee) {
+    	return timeEntryEntityService.edit(id, tee);
     }
     
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public void deleteEntry(@PathVariable Long id) {
-    	entryService.deleteEntry(id);
+    public void delete(@PathVariable Long id) {
+    	timeEntryEntityService.delete(id);
     }
+    
 }
