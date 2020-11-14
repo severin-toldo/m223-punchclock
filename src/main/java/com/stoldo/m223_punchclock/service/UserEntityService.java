@@ -49,6 +49,8 @@ public class UserEntityService {
     
 	public UserEntity edit(Long id, @Valid UserEntity ue) {
 		UserEntity existingUser = getById(id);
+		existingUser.setFirstName(ue.getFirstName());
+		existingUser.setLastName(ue.getLastName());
 		return saveUser(existingUser);
 	}
     
@@ -58,15 +60,23 @@ public class UserEntityService {
     
    	public UserEntity changePassword(Long id, @Valid UserChangePasswordRequest ucpr) {
    		UserEntity existingUser = getById(id);
-   		existingUser.setPassword(passwordEncoder.encode(ucpr.getNewPassword()));
-   		return saveUser(existingUser);
+   		boolean oldMatchesNewPassword = passwordEncoder.matches(ucpr.getOldPassword(), existingUser.getPassword());
+   		
+   		if (oldMatchesNewPassword) {
+   			existingUser.setPassword(passwordEncoder.encode(ucpr.getNewPassword()));	
+   			return saveUser(existingUser);
+   		}
+   		
+   		throw new RuntimeException("TODO error code");
    	}
     
     public UserEntity invite(@RequestBody @Valid UserInvitationRequest uir) {
     	UserEntity ue = new UserEntity();
     	ue.setEmail(uir.getEmail());
+    	ue.setFirstName(uir.getFirstName());
+    	ue.setLastName(uir.getLastName());
     	ue.setPassword(passwordEncoder.encode(uir.getPassword()));
-		ue.setSecurityRoles(uir.getRoles());
+		ue.setRoles(uir.getRoles());
 		ue.setStatus(UserStatus.INVITED);
     	
         return saveUser(ue);
@@ -77,8 +87,8 @@ public class UserEntityService {
     }
     
     public boolean hasRole(UserEntity ue, Role role) {
-    	if (ue != null && ue.getSecurityRoles() != null) {
-    		Role adminRole = ue.getSecurityRoles()
+    	if (ue != null && ue.getRoles() != null) {
+    		Role adminRole = ue.getRoles()
     				.stream()
     				.map(sr -> sr.getRole())
     				.filter(r -> r == Role.ADMIN)

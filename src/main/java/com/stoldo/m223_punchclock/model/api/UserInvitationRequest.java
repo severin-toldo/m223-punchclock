@@ -22,6 +22,12 @@ public class UserInvitationRequest {
 	@NotNull
     private String password;
 	
+	@NotNull
+    private String firstName;
+    
+    @NotNull
+    private String lastName;
+	
 	private List<RoleEntity> roles;
 
 }

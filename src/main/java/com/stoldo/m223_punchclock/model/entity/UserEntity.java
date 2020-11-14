@@ -43,6 +43,14 @@ public class UserEntity {
     @Email
     @Column(name = "email", unique = true)
     private String email;
+    
+    @NotNull
+    @Column(name = "firstname")
+    private String firstName;
+    
+    @NotNull
+    @Column(name = "lastname")
+    private String lastName;
 
     @NotNull
     @Column(name = "password")
@@ -55,14 +63,14 @@ public class UserEntity {
     private UserStatus status;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<RoleEntity> securityRoles;
+    private List<RoleEntity> roles;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private List<TimeEntryEntity> entries = new ArrayList<>();
     
     
     public UserDetails toUserDetails() {
-    	Set<SimpleGrantedAuthority> authorities = securityRoles
+    	Set<SimpleGrantedAuthority> authorities = roles
         		.stream()
         		.map(r -> new SimpleGrantedAuthority(r.getRole().name()))
         		.collect(Collectors.toSet());
