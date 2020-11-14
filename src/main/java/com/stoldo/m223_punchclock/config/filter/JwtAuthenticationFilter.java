@@ -41,12 +41,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throw new RuntimeException(ex);
         }
     }
-
     
-    // TODO only admin should be able to register uswers...
-    // TODO return user
-    
-    // TODO make itrfc conform and add emailmetc
     @Override
     public void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication auth) throws IOException, ServletException {
     	User user = (User) auth.getPrincipal();
@@ -54,7 +49,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = JWT
         		.create()
         		.withSubject(user.getUsername())
-                .withClaim("email", user.getUsername())
                 .withExpiresAt(DateUtils.addMinutes(new Date(), jwtTokenValidityInMinutes))
                 .sign(Algorithm.HMAC256(jwtSecret.getBytes()));
 

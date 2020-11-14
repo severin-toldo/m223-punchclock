@@ -10,6 +10,11 @@ import com.stoldo.m223_punchclock.service.CategoryEntityService;
 import javax.validation.Valid;
 import java.util.List;
 
+
+//TODO dependecy stuff -> wenn noch zeit eintrag mit kategire und kategrie löschen dann fehler etc. does this make sense tho?
+//-> think about it
+
+
 @RestController
 @RequestMapping("/categories")
 public class CategoryEntityController {

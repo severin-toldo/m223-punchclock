@@ -11,8 +11,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-// TODO fix this shit
-//TODO fox tthe role shit.
 
 @Service
 public class RoleEntityService {
