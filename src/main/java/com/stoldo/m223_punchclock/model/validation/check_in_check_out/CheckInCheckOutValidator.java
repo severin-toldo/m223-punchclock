@@ -1,4 +1,4 @@
-package com.stoldo.m223_punchclock.model.validation;
+package com.stoldo.m223_punchclock.model.validation.check_in_check_out;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

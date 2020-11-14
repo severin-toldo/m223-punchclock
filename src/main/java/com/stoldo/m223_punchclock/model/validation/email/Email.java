@@ -1,4 +1,4 @@
-package com.stoldo.m223_punchclock.model.validation;
+package com.stoldo.m223_punchclock.model.validation.email;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,12 +8,12 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Constraint(validatedBy = CheckInCheckOutValidator.class)
-@Target(ElementType.TYPE)
+@Constraint(validatedBy = EmailValidator.class)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidCheckInCheckOut {
+public @interface Email {
 	
-	String message() default "checkOut cannot be before checkIn!";
+	String message() default "Must be a valid E-Mail!";
 	Class<?>[] groups() default { };
     Class<? extends Payload>[] payload() default { };
 	

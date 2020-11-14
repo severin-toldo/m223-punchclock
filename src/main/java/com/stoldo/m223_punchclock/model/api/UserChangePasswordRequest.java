@@ -2,20 +2,17 @@ package com.stoldo.m223_punchclock.model.api;
 
 import javax.validation.constraints.NotNull;
 
-import com.stoldo.m223_punchclock.model.validation.email.Email;
-
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class UserLoginRequest {
-	
-	@Email
-	@NotNull
-	private String email;
+@Setter
+public class UserChangePasswordRequest {
 	
 	@NotNull
-	private String password;
+	private String oldPassword;
+	
+	@NotNull
+	private String newPassword;
 
 }

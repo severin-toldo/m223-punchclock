@@ -1,7 +1,16 @@
 package com.stoldo.m223_punchclock.model.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,8 +18,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.stoldo.m223_punchclock.model.enums.UserType;
-import com.stoldo.m223_punchclock.shared.util.CommonUtils;
+import com.stoldo.m223_punchclock.model.enums.UserStatus;
+import com.stoldo.m223_punchclock.model.validation.email.Email;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +29,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
 @Getter
 @Setter
 @Entity(name = "user")
@@ -28,9 +38,9 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @NotNull
-    @Email(regexp = CommonUtils.EMAIL_REGEXP, message = CommonUtils.EMAIL_REGEXP_MESSAGE)
+    @Email
     @Column(name = "email", unique = true)
     private String email;
 
@@ -41,13 +51,13 @@ public class UserEntity {
     
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "type")
-    private UserType type;
+    @Column(name = "status")
+    private UserStatus status;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<RoleEntity> securityRoles;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private List<TimeEntryEntity> entries = new ArrayList<>();
     
     
