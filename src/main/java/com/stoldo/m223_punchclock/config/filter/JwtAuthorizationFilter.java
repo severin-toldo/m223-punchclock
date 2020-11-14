@@ -19,9 +19,10 @@ import java.io.IOException;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-	private final String jwtSecret;
-	private final UserEntityService userEntityService;
+	private String jwtSecret;
+	private UserEntityService userEntityService;
 
+	
 	public JwtAuthorizationFilter(AuthenticationManager authenticationManager, String jwtSecret, UserEntityService userEntityService) {
 		super(authenticationManager);
 		this.jwtSecret = jwtSecret;

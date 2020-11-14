@@ -58,7 +58,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     	
     	http
     		.addFilterBefore(new RequestLogFilter(), BasicAuthenticationFilter.class)
-    		.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtSecret, jwtTokenValidityInMinutes))
+    		.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtSecret, jwtTokenValidityInMinutes, userEntityService))
     		.addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtSecret, userEntityService));
     }
 

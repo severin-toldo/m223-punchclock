@@ -4,9 +4,9 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stoldo.m223_punchclock.model.api.UserLoginRequest;
+import com.stoldo.m223_punchclock.model.entity.UserEntity;
+import com.stoldo.m223_punchclock.service.UserEntityService;
 import com.stoldo.m223_punchclock.shared.Constants;
-
-import lombok.RequiredArgsConstructor;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,18 +24,28 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 
-@RequiredArgsConstructor
+
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final AuthenticationManager authenticationManager;
-	private final String jwtSecret;
-	private final Integer jwtTokenValidityInMinutes;
-
+    private AuthenticationManager authenticationManager;
+	private String jwtSecret;
+	private Integer jwtTokenValidityInMinutes;
+	private UserEntityService userEntityService;
+	private ObjectMapper objectMapper = new ObjectMapper();
+	
+	
+	public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String jwtSecret, Integer jwtTokenValidityInMinutes, UserEntityService userEntityService) {
+		super();
+		this.authenticationManager = authenticationManager;
+		this.jwtSecret = jwtSecret;
+		this.jwtTokenValidityInMinutes = jwtTokenValidityInMinutes;
+		this.userEntityService = userEntityService;
+	}
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
         try {
-        	UserLoginRequest ulr = new ObjectMapper().readValue(req.getInputStream(), UserLoginRequest.class);
+        	UserLoginRequest ulr = objectMapper.readValue(req.getInputStream(), UserLoginRequest.class);
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(ulr.getEmail(), ulr.getPassword(), Collections.emptyList()));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
@@ -45,13 +55,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication auth) throws IOException, ServletException {
     	User user = (User) auth.getPrincipal();
+    	UserEntity ue = userEntityService.getByEmail(user.getUsername());
         
         String token = JWT
         		.create()
-        		.withSubject(user.getUsername())
+        		.withSubject(ue.getEmail())
                 .withExpiresAt(DateUtils.addMinutes(new Date(), jwtTokenValidityInMinutes))
                 .sign(Algorithm.HMAC256(jwtSecret.getBytes()));
 
 		res.addHeader(Constants.AUTH_HEADER_NAME, Constants.JWT_TOKEN_PREFIX + token);
+		res.getWriter().write(objectMapper.writeValueAsString(ue));
+		res.getWriter().flush();
+		res.getWriter().close();
     }
 }
