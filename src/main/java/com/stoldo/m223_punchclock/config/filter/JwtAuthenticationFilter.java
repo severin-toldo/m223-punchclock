@@ -44,6 +44,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     
     // TODO only admin should be able to register uswers...
+    // TODO return user
     
     // TODO make itrfc conform and add emailmetc
     @Override

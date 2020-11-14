@@ -1,5 +1,6 @@
 package com.stoldo.m223_punchclock.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,8 @@ public class TimeEntryEntityController {
 	
     private TimeEntryEntityService entryService;
     
-
+    
+    @Autowired
     public TimeEntryEntityController(TimeEntryEntityService entryService) {
         this.entryService = entryService;
     }

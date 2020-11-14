@@ -1,5 +1,6 @@
 package com.stoldo.m223_punchclock.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,8 @@ public class CategoryEntityController {
 	
     private CategoryEntityService categoryService;
     
-
+    
+    @Autowired
     public CategoryEntityController(CategoryEntityService categoryService) {
         this.categoryService = categoryService;
     }
