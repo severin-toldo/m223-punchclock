@@ -32,7 +32,7 @@ public class FilterExceptionFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);	
 		} catch (Throwable t) {
 			ExceptionResponse er = exceptionHandlerService.handle(t);
-			response.setStatus(er.getHttpStatus().value());
+			response.setStatus(er.getHttpStatusCode());
 	    	response.getWriter().write(objectMapper.writeValueAsString(er));
 	    	response.getWriter().flush();
 	    	response.getWriter().close();

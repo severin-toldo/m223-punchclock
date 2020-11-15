@@ -7,7 +7,8 @@ public enum ErrorCode {
 	E1003("Cannot delete category, there are still related time entries!"),
 	E1004("Cannot delete user, there are still related time entries!"),
 	E1005("Token expired!"),
-	E1006("Entity not found!");
+	E1006("Entity not found!"),
+	E1007("E-Mail or Password is wrong!");
 	
 	private String message;
 

@@ -71,4 +71,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		res.getWriter().flush();
 		res.getWriter().close();
     }
+    
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest req, HttpServletResponse res, AuthenticationException ae) throws IOException, ServletException {
+        throw new ErrorCodeException(ErrorCode.E1007, HttpStatus.BAD_REQUEST, ae);
+    }
 }
