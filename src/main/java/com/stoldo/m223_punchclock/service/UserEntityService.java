@@ -52,7 +52,11 @@ public class UserEntityService {
 	}
     
 	public void delete(@PathVariable Long id) {
-		userEntityRepository.deleteById(id);
+		try {
+			userEntityRepository.deleteById(id);	
+		} catch (Exception e) {
+			throw new ErrorCodeException(ErrorCode.E1004, HttpStatus.BAD_REQUEST);
+		}
 	}
     
    	public UserEntity changePassword(Long id, UserChangePasswordRequest ucpr) {

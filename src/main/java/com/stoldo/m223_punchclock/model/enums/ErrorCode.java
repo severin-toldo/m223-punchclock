@@ -4,7 +4,8 @@ public enum ErrorCode {
 	E1000("Unknown Error!"),
 	E1001("Failed to parse JSON!"),
 	E1002("Old password does not match new password!"),
-	E1003("Cannot delete category, there are still related time entries!");
+	E1003("Cannot delete category, there are still related time entries!"),
+	E1004("Cannot delete user, there are still related time entries!");
 	
 	private String message;
 

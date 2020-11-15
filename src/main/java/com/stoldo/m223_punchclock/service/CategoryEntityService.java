@@ -5,8 +5,11 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.stoldo.m223_punchclock.model.entity.CategoryEntity;
+import com.stoldo.m223_punchclock.model.enums.ErrorCode;
+import com.stoldo.m223_punchclock.model.exception.ErrorCodeException;
 import com.stoldo.m223_punchclock.repository.CategoryEntityRepository;
 
 
@@ -39,7 +42,11 @@ public class CategoryEntityService {
     }
     
     public void delete(Long id) {
-    	categoryEntityRepository.deleteById(id);
+    	try {
+    		categoryEntityRepository.deleteById(id);
+		} catch (Exception e) {
+			throw new ErrorCodeException(ErrorCode.E1003, HttpStatus.BAD_REQUEST);
+		}
     }
     
     public CategoryEntity getById(Long id) {
