@@ -61,6 +61,12 @@ public class UserEntityService {
    		
    		if (oldMatchesNewPassword) {
    			existingUser.setPassword(passwordEncoder.encode(ucpr.getNewPassword()));	
+   			
+   			// if change password is called to change intial password, change user status to active on sucess.
+   			if (existingUser.getStatus() == UserStatus.INVITED) {
+   				existingUser.setStatus(UserStatus.ACTIVE);	
+   			}
+   			
    			return save(existingUser);
    		}
    		

@@ -19,7 +19,7 @@ public class RoleEntity {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "name")
+    @Column(name = "role_name")
     private Role role;
     
 }

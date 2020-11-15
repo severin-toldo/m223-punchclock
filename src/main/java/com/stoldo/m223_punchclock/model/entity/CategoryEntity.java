@@ -27,7 +27,7 @@ public class CategoryEntity {
     @Column(name = "name", unique = true)
     private String name;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
     private List<TimeEntryEntity> entries = new ArrayList<>();
     
 }

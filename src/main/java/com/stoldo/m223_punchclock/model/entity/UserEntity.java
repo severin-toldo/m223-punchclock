@@ -1,6 +1,5 @@
 package com.stoldo.m223_punchclock.model.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -62,10 +61,10 @@ public class UserEntity {
     @Column(name = "status")
     private UserStatus status;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<RoleEntity> roles;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<TimeEntryEntity> entries = new ArrayList<>();
     
     

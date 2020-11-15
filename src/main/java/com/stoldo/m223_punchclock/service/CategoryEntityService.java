@@ -5,11 +5,8 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.stoldo.m223_punchclock.model.entity.CategoryEntity;
-import com.stoldo.m223_punchclock.model.enums.ErrorCode;
-import com.stoldo.m223_punchclock.model.exception.ErrorCodeException;
 import com.stoldo.m223_punchclock.repository.CategoryEntityRepository;
 
 
@@ -17,13 +14,11 @@ import com.stoldo.m223_punchclock.repository.CategoryEntityRepository;
 public class CategoryEntityService {
 	
     private CategoryEntityRepository categoryEntityRepository;
-    private TimeEntryEntityService timeEntryEntityService;
 
     
     @Autowired
-    public CategoryEntityService(CategoryEntityRepository categoryEntityRepository, TimeEntryEntityService timeEntryEntityService) {
+    public CategoryEntityService(CategoryEntityRepository categoryEntityRepository) {
         this.categoryEntityRepository = categoryEntityRepository;
-        this.timeEntryEntityService = timeEntryEntityService;
     }
     
     public List<CategoryEntity> getAll() {
@@ -32,7 +27,7 @@ public class CategoryEntityService {
 
     public CategoryEntity create(CategoryEntity ce) {
     	ce.setId(null);
-        
+    	
     	return save(ce);
     }
     
@@ -44,13 +39,11 @@ public class CategoryEntityService {
     }
     
     public void delete(Long id) {
-    	CategoryEntity existingCategory = categoryEntityRepository.findById(id).orElse(null);
-    	
-    	if (timeEntryEntityService.countByCategory(existingCategory) == 0) {
-    		categoryEntityRepository.deleteById(id);	
-    	} else {
-    		throw new ErrorCodeException(ErrorCode.E1003, HttpStatus.BAD_REQUEST);
-    	}
+    	categoryEntityRepository.deleteById(id);
+    }
+    
+    public CategoryEntity getById(Long id) {
+    	return categoryEntityRepository.findById(id).orElse(null);
     }
     
     private CategoryEntity save(CategoryEntity ce) {

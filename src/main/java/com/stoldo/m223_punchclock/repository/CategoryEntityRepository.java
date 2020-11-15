@@ -6,4 +6,6 @@ import com.stoldo.m223_punchclock.model.entity.CategoryEntity;
 
 public interface CategoryEntityRepository extends JpaRepository<CategoryEntity, Long> {
 	
+	public Long countById(Long id);
+	
 }

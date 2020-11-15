@@ -19,29 +19,31 @@ public class TimeEntryEntityService {
     private TimeEntryEntityRepository timeEntryEntityRepository;
     private CurrentSessionService css;
     private UserEntityService userEntityService;
+    private CategoryEntityService categoryEntityService;
     
 
     @Autowired
-    public TimeEntryEntityService(TimeEntryEntityRepository timeEntryEntityRepository, CurrentSessionService css, UserEntityService userEntityService) {
+    public TimeEntryEntityService(TimeEntryEntityRepository timeEntryEntityRepository, CurrentSessionService css, UserEntityService userEntityService, CategoryEntityService categoryEntityService) {
         this.timeEntryEntityRepository = timeEntryEntityRepository;
         this.css = css;
         this.userEntityService = userEntityService;
+        this.categoryEntityService = categoryEntityService;
     }
     
     public List<TimeEntryEntity> getAll() {
-    	UserEntity loggedInUser = css.getLoggedInUserEntity();
-    	
-    	if (userEntityService.isAdmin(loggedInUser)) {
-    		return timeEntryEntityRepository.findAll();
-    	}
-    	
-        return timeEntryEntityRepository.findByUser(loggedInUser);
+    	return timeEntryEntityRepository.findAll();
+    }
+    
+    public List<TimeEntryEntity> getAllByLoggedInUser() {
+    	return timeEntryEntityRepository.findByUser(css.getLoggedInUserEntity());
     }
     
     public TimeEntryEntity create(TimeEntryEntity tee) {
     	UserEntity loggedInUser = css.getLoggedInUserEntity();
     	tee.setUser(loggedInUser);
     	tee.setId(null);
+    	sanitizeCategory(tee);
+    	
         return save(tee);
     }
     
@@ -62,6 +64,7 @@ public class TimeEntryEntityService {
     	existingEntry.setCategory(tee.getCategory());
     	existingEntry.setCheckIn(tee.getCheckIn());
     	existingEntry.setCheckOut(tee.getCheckOut());
+    	sanitizeCategory(existingEntry);
     	
     	return save(tee);
     }
@@ -80,11 +83,21 @@ public class TimeEntryEntityService {
     	}
     }
     
-    public Long countByCategory(CategoryEntity ce) {
-    	return timeEntryEntityRepository.countByCategory(ce);
-    }
-    
     private TimeEntryEntity save(TimeEntryEntity tee) {
 		return timeEntryEntityRepository.saveAndFlush(tee);    
+    }
+    
+    /**
+     * Ensures that you can't create or edit categories by modifying the POST body
+     * */
+    private void sanitizeCategory(TimeEntryEntity tee) {
+    	if (tee.getCategory() != null) {
+    		if (tee.getCategory().getId() == null) {
+    			tee.setCategory(null);	
+    		} else {
+    			CategoryEntity existingCategory = categoryEntityService.getById(tee.getCategory().getId());
+    			tee.setCategory(existingCategory);
+    		}
+    	}
     }
 }
