@@ -1,6 +1,7 @@
 package com.stoldo.m223_punchclock.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.stoldo.m223_punchclock.model.api.UserChangePasswordRequest;
 import com.stoldo.m223_punchclock.model.api.UserInvitationRequest;
+import com.stoldo.m223_punchclock.model.entity.RoleEntity;
 import com.stoldo.m223_punchclock.model.entity.UserEntity;
 import com.stoldo.m223_punchclock.model.enums.ErrorCode;
 import com.stoldo.m223_punchclock.model.enums.Role;
@@ -24,12 +26,14 @@ public class UserEntityService {
 
     private UserEntityRepository userEntityRepository;
     private BCryptPasswordEncoder passwordEncoder;
+    private RoleEntityService roleEntityService;
 
     
     @Autowired
-    public UserEntityService(UserEntityRepository userEntityRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserEntityService(UserEntityRepository userEntityRepository, BCryptPasswordEncoder passwordEncoder, RoleEntityService roleEntityService) {
     	this.userEntityRepository = userEntityRepository;
     	this.passwordEncoder = passwordEncoder;
+    	this.roleEntityService = roleEntityService;
     }
     
 	public List<UserEntity> getAll() {
@@ -83,8 +87,14 @@ public class UserEntityService {
     	ue.setFirstName(uir.getFirstName());
     	ue.setLastName(uir.getLastName());
     	ue.setPassword(passwordEncoder.encode(uir.getPassword()));
-		ue.setRoles(uir.getRoles());
 		ue.setStatus(UserStatus.INVITED);
+		
+		List<RoleEntity> roleEntites = uir.getRoles()
+				.stream()
+				.map(r -> roleEntityService.getByRole(r))
+				.collect(Collectors.toList());
+		
+		ue.setRoles(roleEntites);
     	
         return save(ue);
     }

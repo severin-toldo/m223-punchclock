@@ -2,10 +2,14 @@ package com.stoldo.m223_punchclock.config.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.stoldo.m223_punchclock.model.enums.ErrorCode;
+import com.stoldo.m223_punchclock.model.exception.ErrorCodeException;
 import com.stoldo.m223_punchclock.service.UserEntityService;
 import com.stoldo.m223_punchclock.shared.Constants;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,13 +48,18 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	}
 	
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest req) {
+		String email = null;
 		String token = req.getHeader(Constants.AUTH_HEADER_NAME);
 	
-		String email = JWT
-				.require(Algorithm.HMAC256(jwtSecret.getBytes()))
-				.build()
-				.verify(token.replace(Constants.JWT_TOKEN_PREFIX, ""))
-				.getSubject();
+		try {
+			email = JWT
+					.require(Algorithm.HMAC256(jwtSecret.getBytes()))
+					.build()
+					.verify(token.replace(Constants.JWT_TOKEN_PREFIX, ""))
+					.getSubject();	
+		} catch (TokenExpiredException tee) {
+			throw new ErrorCodeException(ErrorCode.E1005, HttpStatus.UNAUTHORIZED);
+		}
 		
 		if (email != null) {
 			UserDetails userDetail = userEntityService.getByEmail(email).toUserDetails();

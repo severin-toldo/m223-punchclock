@@ -19,7 +19,7 @@ public class RoleEntityService {
 		this.roleEntityRepository = roleEntityRepository;
 	}
 
-    public RoleEntity findByRole(Role role) {
+    public RoleEntity getByRole(Role role) {
         return roleEntityRepository.findByRole(role);
     }
 

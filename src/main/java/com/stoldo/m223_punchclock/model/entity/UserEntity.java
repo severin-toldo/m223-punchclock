@@ -17,6 +17,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.stoldo.m223_punchclock.model.converter.RoleEntitiesToRolesSerializer;
 import com.stoldo.m223_punchclock.model.enums.UserStatus;
 import com.stoldo.m223_punchclock.model.validation.email.Email;
 
@@ -61,9 +63,11 @@ public class UserEntity {
     @Column(name = "status")
     private UserStatus status;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonSerialize(using = RoleEntitiesToRolesSerializer.class)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<RoleEntity> roles;
     
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<TimeEntryEntity> entries = new ArrayList<>();
     

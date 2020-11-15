@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import com.stoldo.m223_punchclock.model.entity.RoleEntity;
+import com.stoldo.m223_punchclock.model.enums.Role;
 import com.stoldo.m223_punchclock.model.validation.email.Email;
 
 import lombok.Getter;
@@ -28,6 +28,6 @@ public class UserInvitationRequest {
     @NotNull
     private String lastName;
 	
-	private List<RoleEntity> roles;
+	private List<Role> roles;
 
 }

@@ -19,7 +19,7 @@ import com.stoldo.m223_punchclock.shared.util.CommonUtils;
 
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserEntityController {
 
     private UserEntityService userEntityService;
@@ -63,12 +63,6 @@ public class UserEntityController {
        	CommonUtils.falseThenThrow(css.isCurrentUserSameAsUser(id), new ResponseStatusException(HttpStatus.FORBIDDEN));
    		return userEntityService.changePassword(id, ucpr);
    	}
-    
-    @RequestMapping(value = "email/{email}", method = RequestMethod.GET)
-	public UserEntity getByEmail(@PathVariable String email) {
-    	CommonUtils.falseThenThrow(css.isCurrentUserAdmin() || css.isCurrentUserSameAsUser(email), new ResponseStatusException(HttpStatus.FORBIDDEN));
-		return userEntityService.getByEmail(email);
-	}
     
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)

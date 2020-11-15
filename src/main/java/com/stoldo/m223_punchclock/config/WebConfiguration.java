@@ -13,21 +13,21 @@ public class WebConfiguration implements WebMvcConfigurer {
 	
     
 	@Override
-    public void addCorsMappings(CorsRegistry registry) {
-		registry
-			.addMapping("/**")
-			.allowedMethods("*")
-			.allowedHeaders("*")
-			.exposedHeaders(
-					"Access-Control-Allow-Headers",
-					"Access-Control-Allow-Origin",
-					"Access-Control-Expose-Headers",
-					"Authorization",
-					"Cache-Control",
-					"Content-Type",
-					"Origin"
-					)
-			.allowedOrigins(allowedOrigins.split(","))
-			.allowCredentials(true);
+	public void addCorsMappings(CorsRegistry registry) {
+        registry
+            .addMapping("/**")
+            .allowedMethods("*")
+            .allowedHeaders("*")
+            .exposedHeaders(
+                  "Access-Control-Allow-Headers",
+                  "Access-Control-Allow-Origin",
+                  "Access-Control-Expose-Headers",
+                  "Authorization",
+                  "Cache-Control",
+                  "Content-Type",
+                  "Origin"
+    		)
+            .allowedOrigins(allowedOrigins.split(","))
+            .allowCredentials(true);
     }
 }
