@@ -41,6 +41,11 @@ public class TimeEntryEntityController {
         return timeEntryEntityService.create(tee);
     }
     
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public TimeEntryEntity getById(@PathVariable Long id) {
+    	return timeEntryEntityService.getByIdWithAccessCheck(id);
+    }
+    
     @RequestMapping(value = "{id}", method = RequestMethod.PATCH)
     public TimeEntryEntity edit(@PathVariable Long id, @RequestBody @Valid TimeEntryEntity tee) {
     	return timeEntryEntityService.edit(id, tee);

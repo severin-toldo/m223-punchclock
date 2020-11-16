@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+// TODO improve some methods
 
 @Service
 public class TimeEntryEntityService {
@@ -38,6 +39,16 @@ public class TimeEntryEntityService {
     	return timeEntryEntityRepository.findByUser(css.getLoggedInUserEntity());
     }
     
+    public TimeEntryEntity getByIdWithAccessCheck(Long id) {
+    	UserEntity loggedInUser = css.getLoggedInUserEntity();
+    	
+    	if (userEntityService.isAdmin(loggedInUser)) {
+    		return getById(id);
+    	} else {
+    		return getByIdAndUser(id, loggedInUser);
+    	}
+    }
+    
     public TimeEntryEntity create(TimeEntryEntity tee) {
     	UserEntity loggedInUser = css.getLoggedInUserEntity();
     	tee.setUser(loggedInUser);
@@ -52,13 +63,9 @@ public class TimeEntryEntityService {
     	TimeEntryEntity existingEntry = null;
     	
     	if (userEntityService.isAdmin(loggedInUser)) {
-    		existingEntry = timeEntryEntityRepository
-    				.findById(id)
-    				.orElseThrow(() -> new EntityNotFoundException("TimeEntry with id " + id + " not found!"));
+    		existingEntry = getById(id);
     	} else {
-    		existingEntry = timeEntryEntityRepository
-    				.findByIdAndUser(id, loggedInUser)
-    				.orElseThrow(() -> new EntityNotFoundException("TimeEntry with id " + id + " and user id " + loggedInUser.getId() + " not found!")); 	
+    		existingEntry = getByIdAndUser(id, loggedInUser);
     	}
     	
     	existingEntry.setCategory(tee.getCategory());
@@ -85,6 +92,14 @@ public class TimeEntryEntityService {
     
     private TimeEntryEntity save(TimeEntryEntity tee) {
 		return timeEntryEntityRepository.saveAndFlush(tee);    
+    }
+    
+    private TimeEntryEntity getById(Long id) {
+    	return timeEntryEntityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("TimeEntry with id " + id + " not found!"));	
+    }
+    
+    private TimeEntryEntity getByIdAndUser(Long id, UserEntity ue) {
+    	return timeEntryEntityRepository.findByIdAndUser(id, ue).orElseThrow(() -> new EntityNotFoundException("TimeEntry with id " + id + " and user id " + ue.getId() + " not found!")); 	
     }
     
     /**
