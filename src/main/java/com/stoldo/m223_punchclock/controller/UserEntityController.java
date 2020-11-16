@@ -34,24 +34,53 @@ public class UserEntityController {
 		this.css = css;
 	}
 	
+    /**
+     * @return list of all user entites
+     * @requestMethod GET
+     * @responseStatus OK
+     * @access ADMIN
+     * */
 	@PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
 	public List<UserEntity> getAll() {
 		return userEntityService.getAll();
 	}
 	
+	/**
+     * @return user entity with given id
+     * @param id of desired user entity
+     * @path /{id}
+     * @requestMethod GET
+     * @responseStatus OK
+     * @access ALL
+     * */
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public UserEntity getById(@PathVariable Long id) {
     	CommonUtils.falseThenThrow(css.isCurrentUserAdmin() || css.isCurrentUserSameAsUser(id), new ResponseStatusException(HttpStatus.FORBIDDEN));
 		return userEntityService.getById(id);
 	}
     
+    /**
+     * @return edited user entity
+     * @param user entity to edit and its id
+     * @path /{id}
+     * @requestMethod PATCH
+     * @responseStatus OK
+     * @access ALL
+     * */
     @RequestMapping(value = "{id}", method = RequestMethod.PATCH)
 	public UserEntity edit(@PathVariable Long id, @RequestBody @Valid UserEntity ue) {
     	CommonUtils.falseThenThrow(css.isCurrentUserAdmin() || css.isCurrentUserSameAsUser(id), new ResponseStatusException(HttpStatus.FORBIDDEN));
 		return userEntityService.edit(id, ue);
 	}
     
+    /**
+     * @param id of user entity to delete
+     * @path /{id}
+     * @requestMethod DELETE
+     * @responseStatus NO_CONTENT
+     * @access ADMIN
+     * */
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
@@ -60,12 +89,28 @@ public class UserEntityController {
     	userEntityService.delete(id);
 	}
     
+    /**
+     * @return edited user entity
+     * @param id of user entity to change password of and password change request
+     * @path /{id}/password
+     * @requestMethod PUT
+     * @responseStatus OK
+     * @access ALL
+     * */
     @RequestMapping(value = "{id}/password", method = RequestMethod.PUT)
    	public UserEntity changePassword(@PathVariable Long id, @RequestBody @Valid UserChangePasswordRequest ucpr) {
        	CommonUtils.falseThenThrow(css.isCurrentUserSameAsUser(id), new ResponseStatusException(HttpStatus.FORBIDDEN));
    		return userEntityService.changePassword(id, ucpr);
    	}
     
+    /**
+     * @return invited user entity
+     * @param user invitation request
+     * @path /invite
+     * @requestMethod POST
+     * @responseStatus CREATED
+     * @access ADMIN
+     * */
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
     @RequestMapping(value = "invite", method = RequestMethod.POST)
