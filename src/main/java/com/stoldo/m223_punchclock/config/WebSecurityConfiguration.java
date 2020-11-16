@@ -12,10 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.stoldo.m223_punchclock.config.filter.JwtAuthorizationFilter;
-import com.stoldo.m223_punchclock.config.filter.FilterExceptionFilter;
+import com.stoldo.m223_punchclock.config.exception_handler.FilterExceptionHandler;
 import com.stoldo.m223_punchclock.config.filter.JwtAuthenticationFilter;
 import com.stoldo.m223_punchclock.config.filter.RequestLogFilter;
-import com.stoldo.m223_punchclock.service.ExceptionHandlerService;
 import com.stoldo.m223_punchclock.service.UserEntityService;
 
 
@@ -31,13 +30,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	private UserEntityService userEntityService;
     private BCryptPasswordEncoder passwordEncoder;
-    private ExceptionHandlerService exceptionHandlerService;
     
 	
-	public WebSecurityConfiguration(UserEntityService userEntityService, BCryptPasswordEncoder passwordEncoder, ExceptionHandlerService exceptionHandlerService) {
+	public WebSecurityConfiguration(UserEntityService userEntityService, BCryptPasswordEncoder passwordEncoder) {
 		this.userEntityService = userEntityService;
 		this.passwordEncoder = passwordEncoder;
-		this.exceptionHandlerService = exceptionHandlerService;
 	}
     
     @Override
@@ -60,7 +57,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		http
 			.addFilterBefore(new RequestLogFilter(), BasicAuthenticationFilter.class)
-			.addFilterBefore(new FilterExceptionFilter(exceptionHandlerService), RequestLogFilter.class)
+			.addFilterBefore(new FilterExceptionHandler(), RequestLogFilter.class)
 			.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtSecret, jwtTokenValidityInMinutes, userEntityService))
 			.addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtSecret, userEntityService));
     }

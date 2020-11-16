@@ -1,20 +1,17 @@
-package com.stoldo.m223_punchclock.service;
+package com.stoldo.m223_punchclock.config.exception_handler;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.stoldo.m223_punchclock.model.api.ExceptionResponse;
 import com.stoldo.m223_punchclock.model.enums.ErrorCode;
 import com.stoldo.m223_punchclock.model.exception.ErrorCodeException;
 
-
-@Service
-public class ExceptionHandlerService {
+public interface ExceptionHandler {
 	
-	public ExceptionResponse handle(Throwable t) {
+	public default ExceptionResponse throwableToExceptionResponse(Throwable t) {
 		t.printStackTrace();
 		
 		if (t instanceof ErrorCodeException) {

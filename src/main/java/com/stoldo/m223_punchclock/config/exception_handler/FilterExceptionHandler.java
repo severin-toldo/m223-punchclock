@@ -1,4 +1,4 @@
-package com.stoldo.m223_punchclock.config.filter;
+package com.stoldo.m223_punchclock.config.exception_handler;
 
 import java.io.IOException;
 
@@ -10,28 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.filter.OncePerRequestFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stoldo.m223_punchclock.model.api.ExceptionResponse;
-import com.stoldo.m223_punchclock.service.ExceptionHandlerService;
 
 /**
- * Catches all exceptions thrown in filters and propagates them to the ExceptionHandlerService
+ * Catches all exceptions thrown in filters and handles them properly
  * */
 
-public class FilterExceptionFilter extends OncePerRequestFilter {
+public class FilterExceptionHandler extends OncePerRequestFilter implements ExceptionHandler {
 	
-	private ExceptionHandlerService exceptionHandlerService;
 	private ObjectMapper objectMapper = new ObjectMapper();
 	
-	
-	public FilterExceptionFilter(ExceptionHandlerService exceptionHandlerService) {
-		this.exceptionHandlerService = exceptionHandlerService;
-	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 		try {
 			filterChain.doFilter(request, response);	
 		} catch (Throwable t) {
-			ExceptionResponse er = exceptionHandlerService.handle(t);
+			ExceptionResponse er = throwableToExceptionResponse(t);
 			response.setStatus(er.getHttpStatusCode());
 	    	response.getWriter().write(objectMapper.writeValueAsString(er));
 	    	response.getWriter().flush();
