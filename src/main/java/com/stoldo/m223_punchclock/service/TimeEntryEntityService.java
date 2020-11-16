@@ -14,6 +14,9 @@ import javax.persistence.EntityNotFoundException;
 
 // TODO improve some methods
 
+/**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
+ * */
 @Service
 public class TimeEntryEntityService {
 	

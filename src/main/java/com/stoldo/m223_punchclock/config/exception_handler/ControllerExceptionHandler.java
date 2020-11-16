@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.stoldo.m223_punchclock.model.api.ExceptionResponse;
 
 /**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
  * Catches all exceptions thrown in Controllers and handles them properly
  * */
 

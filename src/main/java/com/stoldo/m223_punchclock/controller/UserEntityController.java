@@ -17,7 +17,9 @@ import com.stoldo.m223_punchclock.service.CurrentSessionService;
 import com.stoldo.m223_punchclock.service.UserEntityService;
 import com.stoldo.m223_punchclock.shared.util.CommonUtils;
 
-
+/**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
+ * */
 @RestController
 @RequestMapping("/users")
 public class UserEntityController {

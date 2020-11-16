@@ -5,6 +5,9 @@ import javax.validation.ConstraintValidatorContext;
 
 import com.stoldo.m223_punchclock.model.entity.TimeEntryEntity;
 
+/**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
+ * */
 public class CheckInCheckOutValidator implements ConstraintValidator<ValidCheckInCheckOut, TimeEntryEntity> {
 
 	@Override

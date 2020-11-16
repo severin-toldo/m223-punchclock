@@ -11,6 +11,9 @@ import com.stoldo.m223_punchclock.model.validation.email.Email;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
+ * */
 @Getter
 @Setter
 public class UserInvitationRequest {

@@ -8,6 +8,9 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.stoldo.m223_punchclock.model.entity.RoleEntity;
 
+/**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
+ * */
 public class RoleEntitiesToRolesSerializer extends JsonSerializer<List<RoleEntity>> {
 
 	@Override

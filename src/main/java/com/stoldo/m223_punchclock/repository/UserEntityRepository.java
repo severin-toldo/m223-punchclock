@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.stoldo.m223_punchclock.model.entity.UserEntity;
 
+/**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
+ * */
 @Repository
 public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
     

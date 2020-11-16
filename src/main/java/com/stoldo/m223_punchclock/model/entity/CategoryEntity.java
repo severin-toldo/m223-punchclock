@@ -17,6 +17,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
+ * */
 @Getter
 @Setter
 @Entity(name = "category")

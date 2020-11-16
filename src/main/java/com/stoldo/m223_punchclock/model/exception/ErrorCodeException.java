@@ -7,6 +7,9 @@ import com.stoldo.m223_punchclock.model.enums.ErrorCode;
 
 import lombok.Getter;
 
+/**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
+ * */
 public class ErrorCodeException extends ResponseStatusException {
 
 	private static final long serialVersionUID = -7473748909684427371L;

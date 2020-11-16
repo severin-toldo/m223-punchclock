@@ -8,6 +8,9 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+/**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
+ * */
 @Constraint(validatedBy = CheckInCheckOutValidator.class)
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

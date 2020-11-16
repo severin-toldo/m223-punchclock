@@ -31,6 +31,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
+/**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
+ * */
 @Getter
 @Setter
 @Entity(name = "user")

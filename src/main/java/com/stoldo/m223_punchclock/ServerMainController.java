@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+/**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
+ * */
 @SpringBootApplication
 public class ServerMainController {
 

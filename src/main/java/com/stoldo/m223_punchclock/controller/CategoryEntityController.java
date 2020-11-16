@@ -11,7 +11,9 @@ import com.stoldo.m223_punchclock.service.CategoryEntityService;
 import javax.validation.Valid;
 import java.util.List;
 
-
+/**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
+ * */
 @RestController
 @RequestMapping("/categories")
 public class CategoryEntityController {

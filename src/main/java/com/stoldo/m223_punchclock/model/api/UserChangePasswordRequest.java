@@ -5,6 +5,9 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * This class and or some of its attributes / fields got added / changed because they were needed.
+ * */
 @Getter
 @Setter
 public class UserChangePasswordRequest {
