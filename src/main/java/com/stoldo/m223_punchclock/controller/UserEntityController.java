@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.stoldo.m223_punchclock.model.api.UserChangePasswordRequest;
+import com.stoldo.m223_punchclock.model.api.UserEditRequest;
 import com.stoldo.m223_punchclock.model.api.UserInvitationRequest;
 import com.stoldo.m223_punchclock.model.entity.UserEntity;
 import com.stoldo.m223_punchclock.service.CurrentSessionService;
@@ -62,16 +63,16 @@ public class UserEntityController {
     
     /**
      * @return edited user entity
-     * @param user entity to edit and its id
+     * @param UserEditRequest
      * @path /{id}
      * @requestMethod PATCH
      * @responseStatus OK
      * @access ALL
      * */
     @RequestMapping(value = "{id}", method = RequestMethod.PATCH)
-	public UserEntity edit(@PathVariable Long id, @RequestBody @Valid UserEntity ue) {
+	public UserEntity edit(@PathVariable Long id, @RequestBody @Valid UserEditRequest ur) {
     	CommonUtils.falseThenThrow(css.isCurrentUserAdmin() || css.isCurrentUserSameAsUser(id), new ResponseStatusException(HttpStatus.FORBIDDEN));
-		return userEntityService.edit(id, ue);
+		return userEntityService.edit(id, ur);
 	}
     
     /**

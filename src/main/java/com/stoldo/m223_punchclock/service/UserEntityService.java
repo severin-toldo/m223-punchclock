@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.stoldo.m223_punchclock.model.api.UserChangePasswordRequest;
+import com.stoldo.m223_punchclock.model.api.UserEditRequest;
 import com.stoldo.m223_punchclock.model.api.UserInvitationRequest;
 import com.stoldo.m223_punchclock.model.entity.RoleEntity;
 import com.stoldo.m223_punchclock.model.entity.UserEntity;
@@ -51,10 +52,10 @@ public class UserEntityService {
         return userEntityRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("User with email " + email + " not found!"));
     }
     
-	public UserEntity edit(Long id, UserEntity ue) {
+	public UserEntity edit(Long id, UserEditRequest ur) {
 		UserEntity existingUser = getById(id);
-		existingUser.setFirstName(ue.getFirstName());
-		existingUser.setLastName(ue.getLastName());
+		existingUser.setFirstName(ur.getFirstName());
+		existingUser.setLastName(ur.getLastName());
 		return save(existingUser);
 	}
     
@@ -92,12 +93,14 @@ public class UserEntityService {
     	ue.setPassword(passwordEncoder.encode(uir.getPassword()));
 		ue.setStatus(UserStatus.INVITED);
 		
-		List<RoleEntity> roleEntites = uir.getRoles()
-				.stream()
-				.map(r -> roleEntityService.getByRole(r))
-				.collect(Collectors.toList());
-		
-		ue.setRoles(roleEntites);
+		if (uir.getRoles() != null) {
+			List<RoleEntity> roleEntites = uir.getRoles()
+					.stream()
+					.map(r -> roleEntityService.getByRole(r))
+					.collect(Collectors.toList());
+			
+			ue.setRoles(roleEntites);	
+		}
     	
         return save(ue);
     }
