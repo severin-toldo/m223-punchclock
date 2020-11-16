@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidCheckInCheckOut {
 	
-	String message() default "checkOut cannot be before checkIn!";
+	String message() default "E1009";
 	Class<?>[] groups() default { };
     Class<? extends Payload>[] payload() default { };
 	

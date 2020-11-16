@@ -8,12 +8,13 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+
 @Constraint(validatedBy = EmailValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Email {
 	
-	String message() default "Must be a valid E-Mail!";
+	String message() default "E1008";
 	Class<?>[] groups() default { };
     Class<? extends Payload>[] payload() default { };
 	

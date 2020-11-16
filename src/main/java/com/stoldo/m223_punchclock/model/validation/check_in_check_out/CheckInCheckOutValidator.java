@@ -9,7 +9,7 @@ public class CheckInCheckOutValidator implements ConstraintValidator<ValidCheckI
 
 	@Override
 	public boolean isValid(TimeEntryEntity bean, ConstraintValidatorContext context) {
-		if (bean.getCheckOut().before(bean.getCheckIn())) {
+		if (bean.getCheckIn() != null && bean.getCheckOut() != null && bean.getCheckOut().before(bean.getCheckIn())) {
 			return false;
 		}
 		
