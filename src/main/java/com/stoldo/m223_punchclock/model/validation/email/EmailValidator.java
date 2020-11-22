@@ -4,9 +4,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 
-/**
- * This class and or some of its attributes / fields got added / changed because they were needed.
- * */
+
 public class EmailValidator implements ConstraintValidator<Email, String> {
 
 	@Override

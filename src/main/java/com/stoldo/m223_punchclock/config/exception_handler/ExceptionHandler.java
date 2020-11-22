@@ -12,9 +12,7 @@ import com.stoldo.m223_punchclock.model.api.ExceptionResponse;
 import com.stoldo.m223_punchclock.model.enums.ErrorCode;
 import com.stoldo.m223_punchclock.model.exception.ErrorCodeException;
 
-/**
- * This class and or some of its fields and or functions where added because they were needed.
- * */
+
 public interface ExceptionHandler {
 	
 	public default ExceptionResponse throwableToExceptionResponse(Throwable t) {

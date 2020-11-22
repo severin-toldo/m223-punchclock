@@ -27,9 +27,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 
-/**
- * This class and or some of its attributes / fields got added / changed because they were needed.
- * */
+
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager authenticationManager;

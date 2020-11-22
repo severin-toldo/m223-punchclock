@@ -17,9 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import lombok.extern.java.Log;
 
-/**
- * This class and or some of its attributes / fields got added / changed because they were needed.
- * */
+
 @Log
 public class RequestLogFilter implements Filter {
 

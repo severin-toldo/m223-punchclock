@@ -16,9 +16,7 @@ import com.stoldo.m223_punchclock.model.validation.check_in_check_out.ValidCheck
 
 import java.util.Date;
 
-/**
- * This class and or some of its attributes / fields got added / changed because they were needed.
- * */
+
 @Getter
 @Setter
 @Entity(name = "time_entry")

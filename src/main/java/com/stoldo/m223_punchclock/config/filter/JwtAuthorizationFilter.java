@@ -21,9 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * This class and or some of its attributes / fields got added / changed because they were needed.
- * */
+
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
 	private String jwtSecret;

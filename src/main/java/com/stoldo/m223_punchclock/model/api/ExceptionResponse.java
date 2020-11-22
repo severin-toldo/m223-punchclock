@@ -6,9 +6,7 @@ import com.stoldo.m223_punchclock.model.enums.ErrorCode;
 
 import lombok.Getter;
 
-/**
- * This class and or some of its attributes / fields got added / changed because they were needed.
- * */
+
 @Getter
 public class ExceptionResponse {
 	

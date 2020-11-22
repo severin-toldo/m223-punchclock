@@ -17,9 +17,7 @@ import com.stoldo.m223_punchclock.config.filter.JwtAuthenticationFilter;
 import com.stoldo.m223_punchclock.config.filter.RequestLogFilter;
 import com.stoldo.m223_punchclock.service.UserEntityService;
 
-/**
- * This class and or some of its attributes / fields got added / changed because they were needed.
- * */
+
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {

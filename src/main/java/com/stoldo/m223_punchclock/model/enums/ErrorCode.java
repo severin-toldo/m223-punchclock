@@ -1,8 +1,6 @@
 package com.stoldo.m223_punchclock.model.enums;
 
-/**
- * This class and or some of its attributes / fields got added / changed because they were needed.
- * */
+
 public enum ErrorCode {
 	E1000("Unknown Error!"),
 	E1001("Failed to parse JSON!"),

@@ -21,9 +21,7 @@ import com.stoldo.m223_punchclock.repository.RoleEntityRepository;
 import com.stoldo.m223_punchclock.repository.TimeEntryEntityRepository;
 import com.stoldo.m223_punchclock.repository.UserEntityRepository;
 
-/**
- * This class and or some of its attributes / fields got added / changed because they were needed.
- * */
+
 @Service
 public class SeedDataService {
 	

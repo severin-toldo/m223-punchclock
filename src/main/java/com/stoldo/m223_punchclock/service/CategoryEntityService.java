@@ -13,9 +13,7 @@ import com.stoldo.m223_punchclock.model.exception.ErrorCodeException;
 import com.stoldo.m223_punchclock.repository.CategoryEntityRepository;
 
 
-/**
- * This class and or some of its attributes / fields got added / changed because they were needed.
- * */
+
 @Service
 public class CategoryEntityService {
 	

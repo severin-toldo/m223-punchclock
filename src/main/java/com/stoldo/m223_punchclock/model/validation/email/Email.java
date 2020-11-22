@@ -9,9 +9,7 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 
-/**
- * This class and or some of its attributes / fields got added / changed because they were needed.
- * */
+
 @Constraint(validatedBy = EmailValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

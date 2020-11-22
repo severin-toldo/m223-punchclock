@@ -11,10 +11,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stoldo.m223_punchclock.model.api.ExceptionResponse;
 
-/**
- * This class and or some of its attributes / fields got added / changed because they were needed.
- * Catches all exceptions thrown in filters and handles them properly
- * */
 
 public class FilterExceptionHandler extends OncePerRequestFilter implements ExceptionHandler {
 	
