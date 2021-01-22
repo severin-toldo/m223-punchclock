@@ -66,7 +66,7 @@ public class SeedDataService {
 		ue.setFirstName("Admin");
 		ue.setLastName("Admin");
 		ue.setEmail("admin@admin.com");
-		ue.setPassword(passwordEncoder.encode("1234"));
+		ue.setPassword(passwordEncoder.encode("5sH!sl£u"));
 		ue.setRoles(Arrays.asList(adminRole));
 		ue.setStatus(UserStatus.ACTIVE);
 		
@@ -78,7 +78,7 @@ public class SeedDataService {
 		ue.setFirstName("Active");
 		ue.setLastName("User");
 		ue.setEmail("active@user.com");
-		ue.setPassword(passwordEncoder.encode("1234"));
+		ue.setPassword(passwordEncoder.encode("5JäS!2iJ"));
 		ue.setStatus(UserStatus.ACTIVE);
 		
 		userEntityRepository.saveAndFlush(ue);
