@@ -12,3 +12,5 @@ The Purpose of this Application is to save trimes.
 3. mvn clean install
 
 4. mvn spring-boot:run
+
+Users: See SeedService.java
